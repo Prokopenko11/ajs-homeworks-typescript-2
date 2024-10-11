@@ -12,26 +12,14 @@ export default class Cart {
   }
 
   countTotal(): number {
-    let sum = 0;
-    for (let i = 0; i < this._items.length; i++) {
-      sum += this._items[i].price;
-    }
-    return sum;
+    return this._items.reduce((sum, item) => sum + item.price, 0);
   }
 
   countTotalWithDiscount(discount: number): number {
-    let sum = 0;
-    for (let i = 0; i < this._items.length; i++) {
-      sum += this._items[i].price * (1 - discount / 100);
-    }
-    return sum;
+    return this.countTotal() * (1 - discount / 100);
   }
 
   deleteItem(id: number): void {
-    for (let i = 0; i < this._items.length; i++) {
-      if (this._items[i].id === id) {
-        this._items.splice(i, 1);
-      }
-    }
+    this._items = this._items.filter(item => item.id !== id);
   }
 }
